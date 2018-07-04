@@ -19,10 +19,12 @@ do
   ORIGFILE=$filename
   if [ ! -f $TARGETFILE ];
   then
-  # "$TARGETFILE not found, copying the file"
+    echo "$TARGETFILE not found, copying the file"
     cp $ORIGFILE $TARGETFILE
   else
-  # "$TARGETFILE found, copying new lines if needed"
-    sed 1,$( wc -l < $TARGETFILE | awk '{print $1}')d $ORIGFILE >> $TARGETFILE
+    echo "$TARGETFILE found, copying new lines if needed"
+    targetfile_nlines=$( wc -l < $TARGETFILE | awk '{print $1}')
+    echo $targetfile_nlines
+    sed 1,${targetfile_nlines}d $ORIGFILE >> $TARGETFILE
   fi
 done
